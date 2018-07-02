@@ -53,6 +53,14 @@ RSpec.describe 'Kansuji test' do
       expect((10 ** 64).to_kansuji).to eq '不可思議'
       expect((10 ** 68).to_kansuji).to eq '無量大数'
     end
+    it 'mixin number' do
+      expect(75454652352.to_kansuji).to eq '七百五十四億五千四百六十五万二千三百五十二'
+      expect(7545465235289756812.to_kansuji).to eq '七百五十四京五千四百六十五兆二千三百五十二億八千九百七十五万六千八百十二'
+      expect((10 ** 20 + 4*10**16).to_kansuji).to eq '垓四京'
+      expect((10 ** 24).to_kansuji).to eq '𥝱'
+      expect((10 ** 28 + 3 * 10 ** 24).to_kansuji).to eq '穣三𥝱'
+      expect('四千四百十三溝五千四百五十四穣八千九百四十四𥝱六千五百四十六垓七千六百七十九京四千四百六十五兆四千五百七十四億六千二百十五万六千三百二十四'.to_number).to eq 441_354_548_944_654_676_794_465_457_462_156_324
+    end
   end
   
   context "Kansuji to number" do
@@ -106,12 +114,13 @@ RSpec.describe 'Kansuji test' do
       expect('不可思議'.to_number).to eq (10 ** 64)
       expect('無量大数'.to_number).to eq (10 ** 68)
     end
+    it 'mixin number' do
+      expect('七百五十四億五千四百六十五万二千三百五十二'.to_number).to eq 75454652352
+      expect('七百五十四京五千四百六十五兆二千三百五十二億八千九百七十五万六千八百十二'.to_number).to eq 7545465235289756812
+      expect('垓四京'.to_number).to eq (10 ** 20 + 4*10**16)
+      expect('穣三𥝱'.to_number).to eq (10 ** 28 + 3 * 10 ** 24)
+      expect('四千四百十三溝五千四百五十四穣八千九百四十四𥝱六千五百四十六垓七千六百七十九京四千四百六十五兆四千五百七十四億六千二百十五万六千三百二十四'.to_number).to eq 441_354_548_944_654_676_794_465_457_462_156_324
+    end
   end
-  #   expect(75454652352.to_number).to eq '七百五十四億五千四百六十五万二千三百五十二'
-  #   expect(7545465235289756812.to_number).to eq '七百五十四京五千四百六十五兆二千三百五十二億八千九百七十五万六千八百十二'
-    
-  #   expect((10 ** 20 + 4*10**16).to_number).to eq '垓四京'
-  #   expect((10 ** 24).to_number).to eq '𥝱'
-  #   expect((10 ** 28 + 3 * 10 ** 24).to_number).to eq '穣三𥝱'
-  # end
+ 
 end
