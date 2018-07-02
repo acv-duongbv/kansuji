@@ -15,7 +15,7 @@ end
 
 class String
   def value_of(str)    
-    str.each_char{|c|  return "Error: #{c} not a kansuji"  if $first.include?(c) == false &&  $last.values.include?(c) == false }
+    # str.each_char{|c|  return "Error: #{c} not a kansuji"  if $first.include?(c) == false &&  $last.values.include?(c) == false }
     return 0 if str == "" || str == nil
     return $first.index(str) if $first.include?(str) && str.length == 1
     return (10 ** $last.key(str)) if $last.values.include?(str) && str.length == 1
