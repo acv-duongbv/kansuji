@@ -12,3 +12,16 @@ class Numeric
     self == 0 ? '零' : convert(self.to_s)
   end
 end
+
+class String
+  def value_of(str)    
+    str.each_char{|c|  return "Error: #{c} not a kansuji"  if $first.include?(c) == false &&  $last.values.include?(c) == false }
+    return 0 if str == "" || str == nil
+    return $first.index(str) if $first.include?(str) && str.length == 1
+    return (10 ** $last.key(str)) if $last.values.include?(str) && str.length == 1
+    $last.values.reverse.map{ |value| return (value_of(str[0, str.index(value)]).equal?(0) ? 1 : value_of(str[0, str.index(value)])) * (10**$last.key(value))+ value_of(str[str.index(value)+1, str.length - str.index(value)]) if str.include?(value)}
+  end
+  def to_number
+    return value_of(self)
+  end
+end
