@@ -48,5 +48,3 @@ class String
     self == '零' ? 0 : value_of(self)
   end
 end
-
-
