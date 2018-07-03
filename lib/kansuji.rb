@@ -12,7 +12,7 @@ class Numeric
     return Kansuji.first[str.to_i] if str.length == 1
     return convert(str[1, str.length - 1]) if str[0] == '0'
     if Kansuji.last.key?(str.length - 1)
-      return (str[0] == '1' && str.length  < 5 ?  '' : Kansuji.first[str[0].to_i])\
+      return (str[0] == '1' && str.length < 5 ? '' : Kansuji.first[str[0].to_i])\
                + Kansuji.last[str.length - 1] + convert(str[1, str.length - 1])
     end
     Kansuji.last.keys.reverse_each do |key|
