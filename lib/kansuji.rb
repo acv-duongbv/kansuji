@@ -31,5 +31,3 @@ class String
       10**Kanji.last.key(max) + to_number(str[(str.index(max) + max.length)..-1])
   end
 end
-
-'九十九'.to_number
