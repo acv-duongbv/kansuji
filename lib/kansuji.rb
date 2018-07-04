@@ -21,7 +21,7 @@ class Integer
 end
 # Convert kasuji to number
 class String
-  def to_number(str = to_s)
+  def to_number(str = to_s.gsub(/[\w\s]/, ''))
     return 0 if str == '零'
     return Kanji.first.index(str) if Kanji.first.include?(str)
     return (10**Kanji.last.key(str)) if Kanji.last.value?(str)
@@ -31,3 +31,5 @@ class String
       10**Kanji.last.key(max) + to_number(str[(str.index(max) + max.length)..-1])
   end
 end
+
+'九十九'.to_number
