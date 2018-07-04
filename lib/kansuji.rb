@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+# To include string and integer
 module Kanji
   class << self; attr_reader :first, :last end
   @first = ['', '一', '二', '三', '四', '五', '六', '七', '八', '九']
@@ -8,8 +10,7 @@ end
 class Integer
   include Kanji
   def to_kansuji(str = to_s)
-    return '零' if zero?
-    return Kanji.first[str.to_i] if str.length == 1
+    return zero? ? '零' : Kanji.first[str.to_i] if str.length == 1
     return to_kansuji(str[1, str.length - 1]) if str[0] == '0'
     Kanji.last.keys.reverse_each do |k|
       next unless k <= (len = str.length) - 1
@@ -28,6 +29,6 @@ class String
     max = ''
     Kanji.last.values.each { |value| max = value if str.include?(value) }
     ((muti = to_number(str[0, str.index(max)])).equal?(0) ? 1 : muti) * \
-      (10**Kanji.last.key(max)) + to_number(str[(str.index(max) + max.length)..-1 ])
+      (10**Kanji.last.key(max)) + to_number(str[(str.index(max) + max.length)..-1])
   end
 end
