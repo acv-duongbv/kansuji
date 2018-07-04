@@ -14,8 +14,8 @@ class Integer
     return to_kansuji(str[1, str.length - 1]) if str[0] == '0'
     Kanji.last.keys.reverse_each do |k|
       next unless k <= (len = str.length) - 1
-      t = (str[0] == '1' && len < 5 ? '' : Kanji.first[str[0].to_i])
-      return (k == len - 1 ? t : to_kansuji(str[0, len - k])) \
+      temp = (str[0] == '1' && len < 5 ? '' : Kanji.first[str[0].to_i])
+      return (k == len - 1 ? temp : to_kansuji(str[0, len - k])) \
        + Kanji.last[k] + to_kansuji(str[len - k, k])
     end
   end
