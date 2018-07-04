@@ -15,10 +15,9 @@ class Integer
                + Kanji.last[str.length - 1] + convert(str[1, str.length - 1])
     end
     Kanji.last.keys.reverse_each do |key|
-      if key <= str.length - 1
-        return convert(str[0, str.length - key]) + Kanji.last[key] \
-         + convert(str[str.length - key, key])
-      end
+      next unless key <= str.length - 1
+      return convert(str[0, str.length - key]) + Kanji.last[key] \
+        + convert(str[str.length - key, key])
     end
   end
 
