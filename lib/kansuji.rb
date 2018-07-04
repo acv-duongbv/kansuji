@@ -7,37 +7,28 @@ end
 # Convert number to Kanji
 class Integer
   include Kanji
-  def convert(str)
+  def to_kansuji(str = self.to_s)
+    return '零' if self.zero?
     return Kanji.first[str.to_i] if str.length == 1
-    return convert(str[1, str.length - 1]) if str[0] == '0'
-    if Kanji.last.key?(str.length - 1)
-      return (str[0] == '1' && str.length < 5 ? '' : Kanji.first[str[0].to_i])\
-               + Kanji.last[str.length - 1] + convert(str[1, str.length - 1])
+    return to_kansuji(str[1, str.length - 1]) if str[0] == '0'
+    Kanji.last.keys.reverse_each do |k|
+      next unless k <= (len = str.length) - 1
+      t = (str[0] == '1' && len < 5 ? '' : Kanji.first[str[0].to_i])
+      return (k == len - 1 ? t : to_kansuji(str[0, len - k])) \
+       + Kanji.last[k] + to_kansuji(str[len - k, k])
     end
-    Kanji.last.keys.reverse_each do |key|
-      next unless key <= str.length - 1
-      return convert(str[0, str.length - key]) + Kanji.last[key] \
-        + convert(str[str.length - key, key])
-    end
-  end
-
-  def to_kansuji
-    zero? ? '零' : convert(to_s)
   end
 end
 # Convert kasuji to number
 class String
-  def value_of(str)
+  def to_number(str = self.to_s)
+    return 0 if str == '零'
     return Kanji.first.index(str) if Kanji.first.include?(str)
     return (10**Kanji.last.key(str)) if Kanji.last.value?(str)
     max = ''
     Kanji.last.values.each { |value| max = value if str.include?(value) }
-    muti = value_of(str[0, str.index(max)])
+    muti = to_number(str[0, str.index(max)])
     (muti.equal?(0) ? 1 : muti) * (10**Kanji.last.key(max)) \
-      + value_of(str[(str.index(max) + max.length)..-1])
-  end
-
-  def to_number
-    self == '零' ? 0 : value_of(self)
+      + to_number(str[(str.index(max) + max.length)..-1])
   end
 end
